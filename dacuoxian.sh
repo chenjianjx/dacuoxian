@@ -17,12 +17,21 @@ if [ ! -r $HOSTS_FILE ]; then
     exit $FAILURE
 fi
 
-if [ $# -lt 1  ]; then
+
+if [ "$1"x =  "disable"x ]; then
+    mode=disable
+    new_hosts_file=$2
+    echo "Going to disable mapping declared in $new_hosts_file"
+else
+    new_hosts_file=$1
+fi 
+
+if [ -z $new_hosts_file  ]; then
    echo "Usage: dacuoxian.sh new-hosts-snippet-file-path" >&2
+   echo "Usage: dacuoxian.sh disable hosts-snippet-file-path" >&2
    exit $FALIURE 
 fi
 
-new_hosts_file=$1
 
 if [ ! -r $new_hosts_file  ]; then 
     echo "$new_hosts_file is not existing or you have no permission to read it" >&2
@@ -83,6 +92,9 @@ echo New hosts re-arranged as those in  $new_hosts_arranged
 #top-doc: now get all the domains defined in the new hosts file
 all_domains=`mktemp -t`
 awk '{printf($2); printf("\n"); }' $new_hosts_arranged > $all_domains
+##sort the domains by length so that longest domains will be matched first, and thus avoid partial matching
+awk '{print length(), $0 | "sort -n -r" }' $all_domains|awk '{print $2}' > $all_domains
+
 echo Domains to be coped with this time are those in $all_domains
 
 #top-doc: remove all the occurences of the domains in the old hosts file
@@ -108,17 +120,25 @@ sed -e '/^\s*[0-9.]\+\s*$/d' -e '/^\s*[0-9.]\+\s*#/d'  $incomplete_temp > $old_h
 echo Old hosts with specified domains removed can be seen in  $old_hosts_with_domains_removed
 
 
+if [ "$mode"x = "disable"x ]; then
+    cat $old_hosts_with_domains_removed > $HOSTS_FILE
+    echo "entries in $new_hosts_file have been removed"
+    echo "Done"
+    exit $SUCCESS 
+fi
+
+
 #top-doc: time to put new entries to the real hosts file. It will be made up of old-entries-without-domains + new ip-domain mappiings
 cat $old_hosts_with_domains_removed > $HOSTS_FILE 
 echo >> $HOSTS_FILE
-hosts_name=`basename $1`
+hosts_name=`basename $new_hosts_file`
 awk '{print $0, hn}' hn=\#$hosts_name-by-dacuoxian $new_hosts_cleaned  >> $HOSTS_FILE
 echo >> $HOSTS_FILE
 
 echo 
 echo 
 echo Done! 
-echo "Hosts in $1 have been added to $HOSTS_FILE"
+echo "Hosts in $new_hosts_file have been added to $HOSTS_FILE"
 
 #top-doc: finally, inform the user about the backup file
 echo "And the old hosts file has been backed-up as $hosts_backup_file"
