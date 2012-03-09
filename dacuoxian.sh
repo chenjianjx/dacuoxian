@@ -90,10 +90,12 @@ echo New hosts re-arranged as those in  $new_hosts_arranged
 
 
 #top-doc: now get all the domains defined in the new hosts file
-all_domains=`mktemp -t`
-awk '{printf($2); printf("\n"); }' $new_hosts_arranged > $all_domains
+all_domains_raw=`mktemp -t`
+awk '{printf($2); printf("\n"); }' $new_hosts_arranged > $all_domains_raw
 ##sort the domains by length so that longest domains will be matched first, and thus avoid partial matching
-awk '{print length(), $0 | "sort -n -r" }' $all_domains|awk '{print $2}' > $all_domains
+
+all_domains=`mktemp -t`
+awk '{print length(), $0 | "sort -n -r" }' $all_domains_raw|awk '{print $2}' > $all_domains
 
 echo Domains to be coped with this time are those in $all_domains
 
