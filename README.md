@@ -14,12 +14,12 @@ If you are a linux user, you can now make use of __dacuoxian__ to change the map
 
 ## Try it
 * download all the files 
-* chmod +x dacuoxian.sh
-* sudo ./dacuoxian.sh google-hosts-sample # Note "sudo" may not be available in linux systems other than Ubuntu.
+* `chmod +x dacuoxian.sh`
+* `sudo ./dacuoxian.sh google-hosts-sample` # Note "sudo" may not be available in linux systems other than Ubuntu.
 * Now check your /etc/hosts file and you can see what's going on
-* Then try re-mapping the domains with another group of IPs: sudo ./dacuoxian.sh google-another-group-of-hosts-sample. And check your /etc/hosts again.
+* Then try re-mapping the domains with another group of IPs: `sudo ./dacuoxian.sh google-another-group-of-hosts-sample`. And check your /etc/hosts again.
 * And you can create your own hosts snippets such as /somepath/foo-hosts1, /somepath/foo-hosts2, /somepath/bar-hosts1 and /somepath/bar-hosts2, and do
-* sudo ./dacuoxian.sh /somepath/foo-hosts1 #add foo-hosts1 to /etc/hosts
-* sudo ./dacuoxian.sh /somepath/bar-hosts1 #add bar-hosts1. Doing this will not remove foo-hosts1
+* `sudo ./dacuoxian.sh /somepath/foo-hosts1` #add foo-hosts1 to /etc/hosts
+* `sudo ./dacuoxian.sh /somepath/bar-hosts1` #add bar-hosts1. Doing this will not remove foo-hosts1
 ...
-* To disable mappings added by dacuoxian, do this: sudo ./dacuoxian.sh disable google-hosts-sample
+* To disable mappings added by dacuoxian, do this: `sudo ./dacuoxian.sh disable google-hosts-sample`
