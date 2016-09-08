@@ -23,3 +23,17 @@ If you are a linux user, you can now make use of __dacuoxian__ to change the map
 * `sudo ./dacuoxian.sh /somepath/bar-hosts1` #add bar-hosts1. Doing this will not remove foo-hosts1
 ...
 * To disable mappings added by dacuoxian, do this: `sudo ./dacuoxian.sh disable google-hosts-sample`
+
+## To make it more convient 
+You can add some alias so that you can type less: 
+
+````
+alias da='sudo /somepath/dacuoxian.sh '
+alias dad='sudo /somepath/dacuoxian.sh disable '
+````
+
+then just 
+````
+da some-group     #enable 
+dad some-group    #disable
+```
