@@ -28,8 +28,8 @@ If you are a linux user, you can now make use of __dacuoxian__ to change the map
 You can add some alias so that you can type less: 
 
 ````
-alias da='sudo /somepath/dacuoxian.sh '
-alias dad='sudo /somepath/dacuoxian.sh disable '
+alias da='cd path-to-your-mapping-files; sudo /path-to-your-dacuoxian-dir/dacuoxian.sh '
+alias dad='cd path-to-your-mapping-files; sudo /path-to-your-dacuoxian-dir/dacuoxian.sh disable '
 ````
 
 then just 
